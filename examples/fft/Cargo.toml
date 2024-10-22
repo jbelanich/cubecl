@@ -1,0 +1,24 @@
+[package]
+name = "fft"
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+version.workspace = true
+
+[features]
+default = ["cubecl/cuda"]
+wgpu = ["cubecl/wgpu"]
+cuda = ["cubecl/cuda"]
+
+[dependencies]
+cubecl = { path = "../../crates/cubecl", version = "0.2.0" }
+cubecl-core = { path = "../../crates//cubecl-core", version = "0.2.0", default-features = false }
+cubecl-runtime = { path = "../../crates/cubecl-runtime", version = "0.2.0", default-features = false }
+cubecl-linalg = { path = "../../crates/cubecl-linalg", version = "0.2.0", default-features = false, optional = true }
+cubecl-wgpu = { path = "../../crates/cubecl-wgpu", version = "0.2.0", default-features = false, optional = true }
+cubecl-cuda = { path = "../../crates/cubecl-cuda", version = "0.2.0", default-features = false, optional = true }
+half = { workspace = true }
+
+[[bench]]
+harness = false
+name = "real"
