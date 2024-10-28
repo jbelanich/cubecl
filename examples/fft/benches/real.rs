@@ -49,8 +49,12 @@ impl<R: Runtime, E: Float> Benchmark for FFTBench<'_, R, E> {
         .to_lowercase()
     }
 
-    fn sync(&self) -> std::time::Duration {
+    fn sync(&self) {
         future::block_on(self.client.sync())
+    }
+
+    fn sync_elapsed(&self) -> cubecl_runtime::TimestampsResult {
+        future::block_on(self.client.sync_elapsed())
     }
 }
 
@@ -71,6 +75,7 @@ struct FFTBench<'a, R: Runtime, E> {
 #[allow(dead_code)]
 fn run<R: Runtime, E: Float>(device: R::Device) {
     let client = R::client(&device);
+    client.enable_timestamps();
 
     let signal_length = 1024;
     let num_signals = 1000;
